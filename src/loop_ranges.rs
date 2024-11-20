@@ -35,7 +35,7 @@ use std::fmt::Display;
 /// The integers i and j are stored as u32. Operations on loop ranges will panic if
 /// results cannot be stored using 32bit unsigned integers.
 ///
-#[derive(Debug, PartialEq, Eq, Clone, Copy, Hash)]
+#[derive(Clone, Copy)]
 pub struct LoopRange(u32, Option<u32>);
 
 /// Wrapper for addition with overflow detection
@@ -43,7 +43,7 @@ pub struct LoopRange(u32, Option<u32>);
 /// Panics if there's an overflow.
 /// Returns x + y otherwise.
 fn add32(x: u32, y: u32) -> u32 {
-    x.checked_add(y).expect("Arithmetic overflow (add u32)")
+    x.checked_add(y).unwrap()
 }
 
 /// Wrapper for multiplication with overflow detection
@@ -51,25 +51,7 @@ fn add32(x: u32, y: u32) -> u32 {
 /// Panics is there's an overflow.
 /// Returns x * y otherwise.
 fn mul32(x: u32, y: u32) -> u32 {
-    x.checked_mul(y).expect("Arithmetic overflow (mul 32)")
-}
-
-impl Display for LoopRange {
-    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        match self {
-            LoopRange(0, Some(1)) => write!(f, "?"),
-            LoopRange(0, None) => write!(f, "*"),
-            LoopRange(1, None) => write!(f, "+"),
-            LoopRange(i, Some(j)) => {
-                if i == j {
-                    write!(f, "{i}")
-                } else {
-                    write!(f, "[{i}..{j}]")
-                }
-            }
-            LoopRange(i, None) => write!(f, "[{i}..inf)"),
-        }
-    }
+    x.checked_mul(y).unwrap()
 }
 
 impl LoopRange {
@@ -169,8 +151,8 @@ impl LoopRange {
     /// - return true if other is included in self.
     pub fn includes(&self, other: &LoopRange) -> bool {
         match (&self, other) {
-            (LoopRange(i1, None), LoopRange(i2, _)) => i1 <= i2,
-            (LoopRange(i1, Some(j1)), LoopRange(i2, Some(j2))) => i1 <= i2 && j2 <= j1,
+            (LoopRange(i1, None), LoopRange(i2, _)) => *i1 <= *i2,
+            (LoopRange(i1, Some(j1)), LoopRange(i2, Some(j2))) => *i1 <= *i2 && *j2 <= *j1,
             _ => false,
         }
     }

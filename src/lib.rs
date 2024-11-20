@@ -26,19 +26,19 @@
 
 #![warn(missing_docs, missing_debug_implementations, rust_2018_idioms)]
 
-pub mod automata;
-pub mod character_sets;
-pub mod errors;
+//pub mod automata;
+//pub mod character_sets;
+//pub mod errors;
 pub mod loop_ranges;
-pub mod regular_expressions;
-pub mod smt_regular_expressions;
-pub mod smt_strings;
-
-mod bfs_queues;
-mod compact_tables;
-mod fast_sets;
-mod labeled_queues;
-mod matcher;
-mod minimizer;
-mod partitions;
-mod store;
+//pub mod regular_expressions;
+//pub mod smt_regular_expressions;
+//pub mod smt_strings;
+//
+//mod bfs_queues;
+//mod compact_tables;
+//mod fast_sets;
+//mod labeled_queues;
+//mod matcher;
+//mod minimizer;
+//mod partitions;
+//mod store;
